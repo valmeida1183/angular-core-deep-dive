@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config ./proxy.json",
+    "start": "ng serve --proxy-config ./proxy.json --configuration=fr",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "./node_modules/.bin/ts-node -P ./server.tsconfig.json ./server.ts"
+    "server": "ts-node -P ./server.tsconfig.json ./server.ts"
   },
   "private": true,
   "dependencies": {
