@@ -5,8 +5,21 @@
   </div>
 
   <ng-content select="course-image"
-              *ngIf="course.iconUrl">
+              *ngIf="course.iconUrl; else blankImage">
   </ng-content>
+
+  <!-- ng-template pode ser passado como um input do componente -->
+  <!-- <ng-template #blankImage>
+    <p class="warn">{{course.description}} has no image yet.</p>
+    <img src="/assets/empty-image.png">
+  </ng-template> -->
+
+  <ng-template #blankImage>
+    <ng-container *ngTemplateOutlet="noImageTemplate; context: {description: course.description}"></ng-container>
+  </ng-template>
+
+  <ng-content select=".course-description"
+  ></ng-content>
 
   <div class="course-description">
 
@@ -38,6 +51,7 @@
   </div>
 
   <button (click)="onSaveClicked(courseTitle.value)">Save Course</button>
+  <button (click)="onCourseSelected()">View Course</button>
 
 </div>
 

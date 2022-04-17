@@ -6,6 +6,7 @@ import {
   Attribute,
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ContentChildren,
   DoCheck,
   ElementRef,
@@ -18,6 +19,7 @@ import {
   Output,
   QueryList,
   SimpleChanges,
+  TemplateRef,
   ViewEncapsulation,
 } from '@angular/core';
 import { Course } from '../../model/course';
@@ -47,8 +49,19 @@ export class CourseCardComponent
   @Input()
   cardIndex: number;
 
+  @Input()
+  noImageTemplate: TemplateRef<any>;
+
+  // tslint:disable-next-line: no-output-rename
   @Output('courseChanged')
   courseEmitter = new EventEmitter<Course>();
+
+  // tslint:disable-next-line: no-output-rename
+  @Output('courseSelected')
+  courseViewEmmiter = new EventEmitter<Course>();
+
+  @ContentChild(CourseImageComponent)
+  courseImage: CourseImageComponent;
 
   constructor(
     private courseService: CoursesService,
@@ -72,6 +85,7 @@ export class CourseCardComponent
 
   ngAfterContentInit(): void {
     console.log('ngAfterContentInit');
+    console.log(this.courseImage);
   }
 
   ngAfterContentChecked(): void {
@@ -92,6 +106,12 @@ export class CourseCardComponent
 
   onSaveClicked(description: string) {
     this.courseEmitter.emit({ ...this.course, description });
+  }
+
+  onCourseSelected() {
+    this.courseImage.imageUrl =
+      'https://s3-us-west-1.amazonaws.com/angular-university/course-images/material_design.png';
+    this.courseViewEmmiter.emit(this.course);
   }
 
   onTitleChanged(title: string) {

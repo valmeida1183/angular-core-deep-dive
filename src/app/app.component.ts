@@ -29,10 +29,21 @@ import { CourseTitleComponent } from './course-title/course-title.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   courses$: Observable<Course[]>;
   courses: Course[] = COURSES;
   coursesTotal = this.courses.length;
+  courseSelected: Course = null;
+
+  //@ViewChild(CourseCardComponent)
+  // @ViewChild('cardRef')
+  // card: CourseCardComponent;
+
+  @ViewChildren(CourseCardComponent)
+  cards: QueryList<CourseCardComponent>;
+
+  @ViewChild('containerRef')
+  container: ElementRef;
 
   constructor(
     private courseService: CoursesService,
@@ -51,11 +62,25 @@ export class AppComponent implements OnInit {
     customElements.define('course-title', htmlElement);
   }
 
+  ngAfterViewInit(): void {
+    // primeiro lifecicle hook onde é possível acessar os viewChilds
+    console.log('App component Card viewChildren', this.cards.first);
+    console.log('App component Container viewChild', this.container);
+  }
+
   onEditCourse() {
     this.courses[1].category = 'ADVANCED';
   }
 
   save(course: Course) {
     this.courseService.saveCourse(course);
+  }
+
+  openDetail(course: Course) {
+    this.courseSelected = course;
+    console.log(this.courseSelected);
+
+    //console.log('App component Card viewChild', this.card);
+    console.log('App component Container viewChild', this.container);
   }
 }
