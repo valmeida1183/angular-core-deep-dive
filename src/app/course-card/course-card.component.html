@@ -4,21 +4,32 @@
     [ngStyle]="underlineCssRule"
     *ngIf="course"
 >
-    <div class="course-title">{{ cardIndex + " " + course.description }}</div>
-    <img
+    <div class="course-title">
+        {{ cardIndex || "" + " " + course.description }}
+    </div>
+
+    <!--
+        a propriedade select de ng-content aceita a tag, classe css do conteúdo a ser projetado
+    -->
+    <ng-content select="course-image"> </ng-content>
+
+    <ng-content select=".course-description"> </ng-content>
+
+    <!-- <img
         *ngIf="course.iconUrl; else noImage"
         width="300"
         alt="Angular Logo"
         [src]="course.iconUrl"
+        #courseImage
     />
 
     <ng-template #noImage>
         <p>No image is available</p>
-    </ng-template>
+    </ng-template> -->
 
-    <div class="course-description">
+    <!-- <div class="course-description">
         {{ course.longDescription }}
-    </div>
+    </div> -->
 
     <div class="course-category" [ngSwitch]="course.category">
         <div class="category" *ngSwitchCase="'BEGINNER'">Beginner</div>

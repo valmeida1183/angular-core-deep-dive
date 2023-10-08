@@ -5,7 +5,7 @@
     />
 </div>
 
-<div class="demo">
+<div class="demo" *ngIf="false">
     <div>Start Date: {{ startDate | date : "MMM/dd/yyyy" }}</div>
     <div>Uppercase: {{ title | uppercase }}</div>
     <div>Lowercase: {{ title | lowercase }}</div>
@@ -15,18 +15,35 @@
     <div>Percentage: {{ price | percent }}</div>
 </div>
 
-{{ courses | json }}
-
-<hr />
+<ng-container *ngIf="false">
+    {{ courses | json }}
+    <hr />
+</ng-container>
 
 <div *ngFor="let pair of firstCourse | keyvalue">
     {{ pair.key + ": " + pair.value }}
 </div>
 
-<div class="courses">
+<div class="courses" #containerRef>
     <course-card
+        #cardRef
+        (courseSelected)="onCourseSelected($event)"
+        [course]="secondCourse"
+    >
+        <course-image [src]="secondCourse.iconUrl"></course-image>
+
+        <h5>Some content that is not projected</h5>
+
+        <div class="course-description">
+            {{ secondCourse.longDescription }}
+        </div>
+    </course-card>
+    <!-- <button (click)="onCoursesEdit()">Edit Courses</button> -->
+
+    <!-- let course of courses | slice : 0 : 2    com esse pipe traria apenasos dois primeiro registros  -->
+    <!-- <course-card
         *ngFor="
-            let course of courses | slice : 0 : 2;
+            let course of courses;
             index as i;
             first as isFirst;
             last as isLast;
@@ -41,5 +58,5 @@
         [course]="course"
         [cardIndex]="i + 1"
     >
-    </course-card>
+    </course-card> -->
 </div>

@@ -1,14 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import {
+    AfterContentInit,
+    AfterViewInit,
+    Component,
+    ContentChild,
+    EventEmitter,
+    Input,
+    OnInit,
+    Output,
+    ViewChild,
+} from "@angular/core";
 import { Course } from "../model/course";
 import { ICssClassRule } from "../model/css-class-rule";
 import { ICssPropertyRule } from "../model/css-property-rule";
+import { CourseImageComponent } from "../course-image/course-image.component";
 
 @Component({
     selector: "course-card",
     templateUrl: "./course-card.component.html",
     styleUrls: ["./course-card.component.css"],
 })
-export class CourseCardComponent implements OnInit {
+export class CourseCardComponent implements OnInit, AfterContentInit {
     @Input({ required: true })
     course: Course;
 
@@ -18,6 +29,9 @@ export class CourseCardComponent implements OnInit {
     @Output("courseSelected")
     courseEmitter = new EventEmitter<Course>();
 
+    @ContentChild(CourseImageComponent)
+    image: CourseImageComponent;
+
     beginnerCssRule: ICssClassRule;
     underlineCssRule: ICssPropertyRule;
 
@@ -26,6 +40,10 @@ export class CourseCardComponent implements OnInit {
     ngOnInit(): void {
         this.loadBeginnerCardCssRule();
         this.loadUnderlineCssRule();
+    }
+
+    ngAfterContentInit(): void {
+        console.log("Content Projection", this.image);
     }
 
     onCourseViewed(): void {
