@@ -25,17 +25,32 @@
 </div>
 
 <div class="courses" #containerRef>
+    <ng-template #blankImage let-courseName="description">
+        <p class="warn">{{ courseName }} has no image yet.</p>
+        <img src="../../assets/empty-image.png" alt="empty image" />
+    </ng-template>
+
+    <!-- ngTemplateOutlet serve para "apresentar o conteúdo do ngTemplate" -->
+    <ng-container
+        *ngTemplateOutlet="
+            blankImage;
+            context: { description: firstCourse.description }
+        "
+    >
+    </ng-container>
+
     <course-card
         #cardRef
         (courseSelected)="onCourseSelected($event)"
-        [course]="secondCourse"
+        [course]="firstCourse"
+        [noImageTemplate]="blankImage"
     >
-        <course-image [src]="secondCourse.iconUrl"></course-image>
+        <course-image [src]="firstCourse.iconUrl"></course-image>
 
         <h5>Some content that is not projected</h5>
 
         <div class="course-description">
-            {{ secondCourse.longDescription }}
+            {{ firstCourse.longDescription }}
         </div>
     </course-card>
     <!-- <button (click)="onCoursesEdit()">Edit Courses</button> -->
