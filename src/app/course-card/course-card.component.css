@@ -1,6 +1,58 @@
+/* "isso não funciona, pois no angular o arquivo de stylo de um componente serve para os estilos "dentro" do componente e não para a própria tag do componente"
+course-card { 
+  display: block;
+} */
 
-.course-card.beginner {
-    background: lightsalmon;
+/* Para isso usamos o seletor css especial do angular ":host" */
+:host {
+  display: block;
 }
 
+:host.is-first {
+  border-top: 2px solid grey;
+  padding-top: 20px;
+}
 
+:host.is-last {
+  border-bottom: 2px solid grey;
+  padding-top: 20px;
+}
+
+:host.is-even {
+  background: lightgray;
+}
+
+:host.is-odd {
+  background: lightcyan;
+}
+
+/* Faz o bypass do view encapsulation apenas da classe especificada no parâmetro da function host-context*/
+:host-context(.salmon-theme) .course-card {
+  background: lightsalmon;
+}
+
+.course-card {
+  margin-bottom: 40px;
+  text-align: center;
+  border-radius: 4px;
+  padding: 20px 0;
+  box-shadow: 0 1px 16px 0 rgba(0, 0, 0, 0.2), 0 2px 8px 0 rgba(0, 0, 0, 0.14),
+    0 4px 8px -1px rgba(0, 0, 0, 0.12);
+}
+
+.course-card .course-title {
+  font-size: 27px;
+  font-weight: bold;
+}
+
+/* A parte da esquerda ao ng-deep faz um bypass do view encapsulation, isso geralmente é usado para estilos que são oriundos do content projection */
+.course-card ::ng-deep .course-description {
+  max-width: 360px;
+  margin: 0 auto;
+  margin-top: 15px;
+  user-select: none;
+}
+
+.course-card.beginner {
+  background: lightsalmon;
+}
