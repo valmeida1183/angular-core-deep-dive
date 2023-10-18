@@ -5,12 +5,15 @@
   />
 </div>
 
-<div *ngIf="courses$ | async as courses">
-  <div class="courses">
+<div class="demo">
+  <button (click)="onEditCourse()">Edit Course</button>
+</div>
+
+<div>
+  <div class="courses" *ngIf="courses[0] as course">
     <course-card
-      highlighted
-      *ngFor="let course of courses"
       [course]="course"
+      type="begginer"
       (courseChanged)="save($event)"
     >
       <course-image [src]="course.iconUrl"></course-image>

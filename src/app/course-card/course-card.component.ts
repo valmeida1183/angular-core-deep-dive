@@ -1,12 +1,15 @@
 import {
   AfterContentInit,
   AfterViewInit,
+  Attribute,
+  ChangeDetectionStrategy,
   Component,
   ContentChildren,
   ElementRef,
   EventEmitter,
   Inject,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   QueryList,
@@ -21,14 +24,8 @@ import { CoursesService } from "../services/courses.service";
   selector: "course-card",
   templateUrl: "./course-card.component.html",
   styleUrls: ["./course-card.component.css"],
-
-  // desta forma vai criar um CoursesService novo para CADA CourseCardComponent novo, Isso é o que se chama de Hierarchical DI.
-  // Pois se os serviço é fornecido no root todos abaixo dele utilizarão a mesma instância, se comportando com um singleton na aplicação
-  // Contudo neste exemplo, o serviço foi declarado como um provider do componente e a partir deste ponto tem uma nova instãncia de CoursesService
-  // que todos os componentes filhos deste componente utilizarão caso injetem o CoursesService.
-  providers: [CoursesService],
 })
-export class CourseCardComponent implements OnInit {
+export class CourseCardComponent implements OnInit, OnDestroy {
   @Input()
   course: Course;
 
@@ -38,11 +35,23 @@ export class CourseCardComponent implements OnInit {
   @Output("courseChanged")
   courseEmitter = new EventEmitter<Course>();
 
-  constructor(@SkipSelf() private coursesService: CoursesService) {}
+  constructor(private coursesService: CoursesService) {
+    console.log("constructor");
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log("ngOnInit");
+  }
+
+  ngOnDestroy(): void {
+    console.log("ngOnDestroy");
+  }
 
   onSaveClicked(description: string) {
     this.courseEmitter.emit({ ...this.course, description });
+  }
+
+  onTitleChanged(newTitle: string): void {
+    this.course.description = newTitle;
   }
 }
