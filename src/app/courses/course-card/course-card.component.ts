@@ -28,7 +28,7 @@ import { CoursesService } from "../courses.service";
   selector: "course-card",
   templateUrl: "./course-card.component.html",
   styleUrls: ["./course-card.component.css"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class CourseCardComponent
   implements
@@ -74,12 +74,12 @@ export class CourseCardComponent
   ngAfterContentChecked(): void {
     // utilizado para verificar as alterações do content projection. É executado com frequencia e não deve contar lógicas que impactem na performance
     console.log("ngAfterContentChecked");
-    this.course.description = "ngAfterContentChecked";
-    this.course.category = "ADVANCED";
+    //this.course.description = "ngAfterContentChecked";
+    //this.course.category = "ADVANCED";
 
     // vai ocasionar erro, pois não se pode mudar o conteúdo de um valor que está sendo usado no content
     // projection neste evento que é disparado após a verificação do conteúdo projetado
-    this.course.iconUrl = "";
+    //this.course.iconUrl = "";
   }
 
   ngAfterViewInit(): void {
