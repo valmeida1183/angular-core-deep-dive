@@ -3,32 +3,28 @@ import {
   AfterContentInit,
   AfterViewChecked,
   AfterViewInit,
-  Attribute,
   ChangeDetectionStrategy,
   Component,
-  ContentChildren,
   DoCheck,
-  ElementRef,
   EventEmitter,
-  Inject,
   Input,
   OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  QueryList,
   SimpleChanges,
-  SkipSelf,
-  ViewEncapsulation,
 } from "@angular/core";
 import { Course } from "src/app/model/course";
 import { CoursesService } from "../courses.service";
+import { NgIf } from "@angular/common";
 
 @Component({
   selector: "course-card",
   templateUrl: "./course-card.component.html",
   styleUrls: ["./course-card.component.css"],
   changeDetection: ChangeDetectionStrategy.Default,
+  standalone: true,
+  imports: [NgIf],
 })
 export class CourseCardComponent
   implements
